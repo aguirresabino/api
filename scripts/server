@@ -1,0 +1,11 @@
+#!/bin/bash
+# Script for running Judge0 server.
+#
+# Usage: ./scripts/server
+#
+source ./scripts/load-config
+
+[[ -f tmp/pids/server.pid ]] && rm -f tmp/pids/server.pid
+
+rails db:create db:migrate db:seed
+rails s -b 0.0.0.0

@@ -1,36 +1,58 @@
-FROM judge0/api-base:0.3.0
+FROM judge0/api-base:1.3.0 AS production
 
-RUN echo "deb http://deb.debian.org/debian jessie main" > /etc/apt/sources.list && \
-    echo "deb http://security.debian.org/debian-security jessie/updates main" >> /etc/apt/sources.list && \
-    rm -rf /etc/apt/sources.list.d/* && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
-      libpq-dev \
-      nodejs-legacy \
-      npm \
-      sudo && \
-    rm -rf /var/lib/apt/lists/*
+ENV JUDGE0_HOMEPAGE "https://judge0.com"
+LABEL homepage=$JUDGE0_HOMEPAGE
 
-ENV PATH "/usr/local/ruby-2.3.3/bin:/opt/.gem/bin:$PATH"
+ENV JUDGE0_SOURCE_CODE "https://github.com/judge0/api"
+LABEL source_code=$JUDGE0_SOURCE_CODE
+
+ENV JUDGE0_MAINTAINER "Herman Zvonimir Došilović <hermanz.dosilovic@gmail.com>"
+LABEL maintainer=$JUDGE0_MAINTAINER
+
+ENV PATH "/usr/local/ruby-2.7.0/bin:/opt/.gem/bin:$PATH"
 ENV GEM_HOME "/opt/.gem/"
-RUN echo "gem: --no-document" > /root/.gemrc && \
-    gem install \
-      rails:5.0.0 \
-      bundler:1.15.4 \
-      pg:0.18 && \
-    npm install -g aglio@2.3.0
 
-EXPOSE 3000
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+      cron \
+      libpq-dev \
+      sudo && \
+    rm -rf /var/lib/apt/lists/* && \
+    echo "gem: --no-document" > /root/.gemrc && \
+    gem install bundler:2.1.4 && \
+    npm install -g --unsafe-perm aglio@2.3.0
 
-WORKDIR /usr/src/api
-COPY Gemfile* /usr/src/api/
+ENV VIRTUAL_PORT 3000
+EXPOSE $VIRTUAL_PORT
+
+WORKDIR /api
+
+COPY Gemfile* ./
 RUN RAILS_ENV=production bundle
 
-COPY . /usr/src/api
-RUN RAILS_ENV=production bundle && \
-    ./scripts/prod-gen-api-docs
+COPY cron /etc/cron.d
+RUN cat /etc/cron.d/* | crontab -
 
-CMD ["./scripts/run-server"]
+COPY . .
 
-LABEL maintainer="Herman Zvonimir Došilović, hermanz.dosilovic@gmail.com"
-LABEL version="1.3.1"
+ENTRYPOINT ["./docker-entrypoint.sh"]
+CMD ["./scripts/server"]
+
+ENV JUDGE0_VERSION "1.9.0"
+LABEL version=$JUDGE0_VERSION
+
+
+FROM production AS development
+
+ARG DEV_USER=judge0
+ARG DEV_USER_ID=1000
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        vim && \
+    useradd -u $DEV_USER_ID -m -r $DEV_USER && \
+    echo "$DEV_USER ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers
+
+USER $DEV_USER
+
+CMD ["sleep", "infinity"]

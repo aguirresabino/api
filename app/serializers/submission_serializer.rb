@@ -1,6 +1,19 @@
 class SubmissionSerializer < ActiveModel::Serializer
   attributes((Submission.column_names + ["status", "language"] - ["id"]).collect(&:to_sym))
 
+  def self.default_fields
+    @@default_fields ||= [
+      :token,
+      :time,
+      :memory,
+      :stdout,
+      :stderr,
+      :compile_output,
+      :message,
+      :status
+    ]
+  end
+
   def source_code
     object_decoder(:source_code)
   end
@@ -37,7 +50,11 @@ class SubmissionSerializer < ActiveModel::Serializer
   end
 
   def language
-    ActiveModelSerializers::SerializableResource.new(object.language, { serializer: LanguageSerializer })
+    ActiveModelSerializers::SerializableResource.new(object.language, { serializer: LanguageSerializer, fields: [:id, :name] })
+  end
+
+  def additional_files
+    Base64Service.encode(object.additional_files)
   end
 
   private

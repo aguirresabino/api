@@ -10,16 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170929175654) do
+ActiveRecord::Schema.define(version: 20200327224155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "clients", id: :string, force: :cascade do |t|
+  end
+
   create_table "languages", force: :cascade do |t|
-    t.string "name"
-    t.string "compile_cmd"
-    t.string "run_cmd"
-    t.string "source_file"
+    t.string  "name"
+    t.string  "compile_cmd"
+    t.string  "run_cmd"
+    t.string  "source_file"
+    t.boolean "is_archived", default: false
   end
 
   create_table "submissions", force: :cascade do |t|
@@ -50,6 +54,11 @@ ActiveRecord::Schema.define(version: 20170929175654) do
     t.integer  "exit_signal"
     t.text     "message"
     t.decimal  "wall_time"
+    t.string   "compiler_options"
+    t.string   "command_line_arguments"
+    t.boolean  "redirect_stderr_to_stdout"
+    t.string   "callback_url"
+    t.binary   "additional_files"
     t.index ["token"], name: "index_submissions_on_token", using: :btree
   end
 

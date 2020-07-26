@@ -1,145 +1,135 @@
-# Judge0 API
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/judge0/api/blob/master/LICENSE)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/hermanzdosilovic)
+# Judge0
+[![Judge0 Wallpaper](https://github.com/judge0/api/blob/master/.github/wallpaper.png?raw=true)](https://api.judge0.com)
+
+[![License](https://img.shields.io/github/license/judge0/api?color=2185d0&style=flat-square)](https://github.com/judge0/api/blob/master/LICENSE)
+[![Release](https://img.shields.io/github/v/release/judge0/api?color=2185d0&style=flat-square)](https://github.com/judge0/api/releases)
+[![Stars](https://img.shields.io/github/stars/judge0/api?color=2185d0&style=flat-square)](https://github.com/judge0/api/stargazers)
+
+<a href="https://www.producthunt.com/posts/judge0-ide" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=179885&theme=light" alt="" height="43px" /></a>
+<a href="https://patreon.com/hermanzdosilovic" target="_blank"><img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" alt="" height="43px" /></a>
+<a href="https://paypal.me/hermanzdosilovic" target="_blank"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Donate with PayPal" height="43px" /></a>
 
 ## About
-**Judge0 API** is an web API for code compilation and execution. Complete and detailed API documentation is available
-on https://api.judge0.com.
+[**Judge0**](https://api.judge0.com) is a robust and scalable open-source online code execution system.
 
-## Content
-1. [Supported Languages](#supported-languages)
-2. [Project Organization](#project-organization)
-3. [Production Setup](#production-setup)
-4. [Development Setup](#development-setup)
-5. [Who Uses Judge0 API?](#who-uses-judge0-api)
-5. [About Docker Images](#about-docker-images)
-6. [Adding New Compiler or Interpreter](#adding-new-compiler-or-interpreter)
+Judge0 can help you build wide range of applications varying from competitive programming platforms, educational and recruitment platforms, to online code editors and more.
 
-## Supported Languages
-|#|Name|
-|:---:|:---:|
-|1 |Bash (4.4)|
-|2 |Bash (4.0)|
-|3 |Basic (fbc 1.05.0)|
-|4 |C (gcc 7.2.0)|
-|5 |C (gcc 6.4.0)|
-|6 |C (gcc 6.3.0)|
-|7 |C (gcc 5.4.0)|
-|8 |C (gcc 4.9.4)|
-|9 |C (gcc 4.8.5)|
-|10|C++ (g++ 7.2.0)|
-|11|C++ (g++ 6.4.0)|
-|12|C++ (g++ 6.3.0)|
-|13|C++ (g++ 5.4.0)|
-|14|C++ (g++ 4.9.4)|
-|15|C++ (g++ 4.8.5)|
-|16|C# (mono 5.4.0.167)|
-|17|C# (mono 5.2.0.224)|
-|18|Clojure (1.8.0)|
-|19|Crystal (0.23.1)|
-|20|Elixir (1.5.1)|
-|21|Erlang (OTP 20.0)|
-|22|Go (1.9)|
-|23|Haskell (ghc 8.2.1)|
-|24|Haskell (ghc 8.0.2)|
-|25|Insect (5.0.0)|
-|26|Java (OpenJDK 9 with Eclipse OpenJ9)|
-|27|Java (OpenJDK 8)|
-|28|Java (OpenJDK 7)|
-|29|JavaScript (nodejs 8.5.0)|
-|30|JavaScript (nodejs 7.10.1)|
-|31|OCaml (4.05.0)|
-|32|Octave (4.2.0)|
-|33|Pascal (fpc 3.0.0)|
-|34|Python (3.6.0)|
-|35|Python (3.5.3)|
-|36|Python (2.7.9)|
-|37|Python (2.6.9)|
-|38|Ruby (2.4.0)|
-|39|Ruby (2.3.3)|
-|40|Ruby (2.2.6)|
-|41|Ruby (2.1.9)|
-|42|Rust (1.20.0)|
-|43|Text (plain text)|
-|44|Executable|
+To see Judge0 in action, try [Judge0 IDE](https://ide.judge0.com) - free and open-source code editor that uses Judge0 for executing the user’s source code.
 
-## Project Organization
-Judge0 API is a [Rails 5](http://weblog.rubyonrails.org/2016/6/30/Rails-5-0-final/) application organized in two major components:
+## Features
+- Quick and easy [installation](https://github.com/judge0/api#installation).
+- Supports more than [45 languages](https://github.com/judge0/api-base#supported-languages).
+- Runs source code in a secure and reliable [sandbox](https://github.com/ioi/isolate).
+- Send multiple source code files and any other files. [Demo](https://asciinema.org/a/318548).
+- Set custom compiler options. [Demo](https://ide.judge0.com/?PfcV).
+- Set custom command line arguments. [Demo](https://ide.judge0.com/?E68R).
+- Set time and memory limits.
+- HTTP callbacks.
+- And [many more](https://api.judge0.com/#submissions-submission).
 
-* [Rails API](https://github.com/rails-api/rails-api)
-  * accepts requests and creates background jobs for Worker.
-* [Worker](https://github.com/resque/resque)
-  * accepts new jobs and process them as they arrive. Worker has only one job - [IsolateJob](https://github.com/judge0/api/blob/master/app/jobs/isolate_job.rb), that job runs untrusted programs in sandboxed environment.
+For more information check out  https://api.judge0.com.
 
-## Production Setup
-Every [release](https://github.com/judge0/api/releases) has it's own deployment procedure that you can follow.
+## Research Paper
+Read the [research paper](https://ieeexplore.ieee.org/) about Judge0.
 
-## Development Setup
-Setting up your development environment is easy thanks to [Docker](https://docs.docker.com/) and [Docker Compose](https://docs.docker.com/compose/). So please install those before continuing.
+## Get Started
+<a href="https://rapidapi.com/hermanzdosilovic/api/judge0" target="_blank"><img src="https://storage.googleapis.com/code-snippets/connect-on-rapidapi-light.png" width="215px" alt="Connect on RapidAPI"></a>
+<span style="margin-left: 20px"></span>
 
-Because we are running our development environment in Docker you don't need to have Ruby, Rails, PostgreSQL, Redis, etc. installed on your computer. You just need to:
-1. Pull [judge0/api](https://hub.docker.com/r/judge0/api/) image:
-    ```
-    $ docker pull judge0/api
-    ```
-2. Copy `judge0-api.conf.default` to `judge0-api.conf`.
-3. Run development shell (it will take a while only first time):
-    ```
-    $ ./scripts/dev-shell
-    ```
+or [deploy](https://github.com/judge0/api/blob/master/CHANGELOG.md#deployment-procedure) on your server.
 
-`scripts/dev-shell` script will open you new **development shell** always in the same container, and if container doesn't exist it will create one for you.
+## Demo
+[![asciicast](https://asciinema.org/a/318465.svg)](https://asciinema.org/a/318465)
 
-You need to run Rails API and Worker in order to have Judge0 API fully operational:
-
-1. Open new development shell and in there run Rails API server:
-    ```
-    $ ./scripts/dev-run-server
-    ```
-2. Open new development shell again and in there run Worker process:
-    ```
-    $ ./scripts/dev-run-worker
-    ```
-3. Open http://localhost:3000 in your browser.
-
-This is minimal setup for development environment, now you can open your favorite editor in your host and start developing Judge0 API.
-
-## Who Uses Judge0 API?
-Following projects successfully use Judge0 API in production:
+## References
+These companies, organizations and projects successfully use Judge0 in production:
+- [Adzetech](https://adzetech.com)
+- [AlgoDaily](https://algodaily.com)
+- [AlgoLadder](http://algoladder.com)
+- [Ask To How](https://www.asktohow.com)
+- [Brilliant Hire](https://www.brillianthire.io)
+- [CODE.IN](https://code.in)
+- [Code Compiler Lite](https://play.google.com/store/apps/details?id=com.codefox.code_compiler_lite) - online mobile code compiler for Android
+- [Code4You](https://code4you.org)
+- [CodeChum](https://www.codechum.com)
+- [CodeClimbers](https://github.com/appsicle/CodeClimbers)
+- [CodeForum.ORG](https://codeforum.org)
+- [CodeInn](https://codeinn.org)
+- [CodeManiacs](https://github.com/KamandPrompt/CodeManiacs) - an online judge for [IIT Mandi](http://www.iitmandi.ac.in)
+- [CodeRunner](https://github.com/codeclassroom/CodeRunner)
+- [Codesites](http://codesites.in)
 - [Codify](https://codify.herokuapp.com)
+- [DevCoach](https://www.dev-coach.com)
+- [Dilla University](http://www.duvlab.website)
+- [Filtered](https://www.filtered.ai)
 - [GeekCoders](http://www.geekcoders.co.in)
+- [Georg-August University of Göttingen](https://www.uni-goettingen.de)
+- [GoMyCode](https://gomycode.co)
+- [Indian Institute of Technology Mandi](http://www.iitmandi.ac.in)
+- [Instacks](https://instacks.in)
+- [Institute of Aeronautical Engineering](https://www.iare.ac.in)
+- [Interview Sandbox](https://interviewsandbox.com)
+- [JavaJudge0Api](https://github.com/bloodnighttw/JavaJudge0Api) - a Java library for interacting with Judge0
 - [Judge Code Online](http://en.chamcode.net)
+- [KPR Institute of Engineering and Technology](https://www.kpriet.ac.in)
+- [KodKarate](http://www.kodkarate.in) - an open-source IDE
+- [KodNest](https://www.kodnest.com)
+- [NewsCad](http://newscad.com)
+- [Newton School](https://www.newtonschool.co)
+- [Picode](https://picode.now.sh) - an online code playground
+- [PrepForTech](https://prepfortech.in)
+- [REVA University](https://reva.edu.in)
+- [Soft CodeOn](https://softcodeon.com)
+- [SparkDatabox](https://sparkdatabox.com)
+- [Stemalica](https://stemalica.com)
 - [Studyfied](https://studyfied.com)
 - [Techie Delight](https://techiedelight.com)
-- [judge0api](https://github.com/vCra/judge0api)
+- [Think exam](https://www.thinkexam.com)
+- [ThinkingBell](https://www.thinkingbell.com)
+- [University of Zagreb, Faculty of Electrical Engineering and Computing](https://www.fer.unizg.hr/en)
+- [VS Code App](https://apps.apple.com/US/app/id1512938504) - lightweight universal IDE for iOS / iPadOS with full iCloud Drive support
+- [Xiith](https://xiith.com)
+- [anu0912/online-code-editor](https://github.com/anu0912/online-code-editor)
+- [judge0-gem](https://github.com/TopRoupi/judge0-gem) - Ruby Gem for interacting with Judge0
+- [judge0_helm](https://github.com/saikatharryc/judge0_helm) - Helm Chart for Judge0
+- [judge0api](https://github.com/vCra/judge0api) - Python library for interacting with Judge0
 - [nGrader](https://ngrader.herokuapp.com)
+- [primat.org](http://primat.org)
+- [uDebug Tool](https://www.udebugtool.com)
+- [wkspace](http://wkspace.herokuapp.com)
+- [yoCode](https://www.yocode.in)
 
-Do you use Judge0 API? If so, please let me know so I can add you to the list!
+Feel free to add yours to the list by sending me an [email](mailto:hermanz.dosilovic@gmail.com) or creating an [issue](https://github.com/judge0/api/issues/new).
 
-## About Docker Images
-This project has two Dockerfiles:
-1. [Dockerfile](https://github.com/judge0/api/blob/master/Dockerfile)
-   * builds `judge0/api:latest` image
+## Community
+Do you have a question, feature request or something else on your mind?
+Or you just want to follow Judge0 news?
+Check out these links:
 
-2. [Dockerfile.dev](https://github.com/judge0/api/blob/master/Dockerfile.dev)
-   * build `judge0/api:dev` image
+* [Subscribe to Judge0 newsletter](https://subscribe.judge0.com)
+* [Join a Discord server](https://discord.gg/6dvxeA8)
+* [Watch asciicasts](https://asciinema.org/~hermanzdosilovic)
+* [Report an issue](https://github.com/judge0/api/issues/new)
+* [Contact the author](https://github.com/hermanzdosilovic)
+* [Get free online support](https://judge0.appointlet.com)
+* [Schedule an online meeting with the author](https://judge0.appointlet.com)
 
-`judge0/api:latest` is built FROM `judge0/api-base:latest` image which contains installed compilers and sandbox environment. This image represents production image of Judge0 API.
+## Author and Contributors
+Judge0 was created by [Herman Zvonimir Došilović](https://github.com/hermanzdosilovic).
 
-`judge0/api:dev` is your local development image built FROM `judge0/api:latest`. It is not pushed to Docker Hub. That is why you first need to pull `judge0/api:latest` before building your development environment.
+Thanks a lot to all [contributors](https://github.com/judge0/api/graphs/contributors) for their contributions in this project.
 
-## Adding New Compiler or Interpreter
-To add new compiler or interpreter you first need to install it into Judge0 API Base image. Instructions on how to do that can be found in documentation for [Judge0 API Base](https://github.com/judge0/api-base).
+## Changelog
+Detailed specification of changes between versions can be found in [CHANGELOG.md](https://github.com/judge0/api/blob/master/CHANGELOG.md).
 
-After you have added your favorite compiler/interpreter to Judge0 API Base image you need to define how this compiler/interpreter is used. This is done in [`db/seeds.rb`](https://github.com/judge0/api/blob/master/db/seeds.rb) file.
+## Special Thanks
+Special thanks to these open-source projects without whom Judge0 probably wouldn't exist: [isolate](https://github.com/ioi/isolate), [Docker](https://github.com/docker), [Ruby on Rails](https://github.com/rails/rails) and others.
 
-You have four attributes:
-* `name` - name of your language you are supporting, include also compiler name and version
-* `source_file` - in what file should user's source code be saved before it is compiled
-* `compile_cmd` - how this file is compiled, interpreted languages won't have this attribute
-* `run_cmd` - how should we run this compiled or interpreted language
-
-We already provided enough examples for most common languages, be sure to check that out.
+## Supporters
+Thanks a lot to all my [Patrons](https://www.patreon.com/hermanzdosilovic) and [PayPal](https://paypal.me/hermanzdosilovic) donors that supported Judge0 development. Thank you! ♥
 
 ## Donate
-If you like Judge0, please consider making a [donation](https://www.paypal.me/hermanzdosilovic) to support this project.
+Your are more than welcome to support Judge0 development on [Patreon](https://www.patreon.com/hermanzdosilovic), via [PayPal](https://paypal.me/hermanzdosilovic) or [Revolut](https://pay.revolut.com/profile/hermancy5).
+
+## License
+Judge0 is licensed under the [GNU General Public License v3.0](https://github.com/judge0/api/blob/master/LICENSE).

@@ -1,27 +1,38 @@
 version: '2'
+
+x-logging:
+  &default-logging
+  logging:
+    driver: json-file
+    options:
+      max-size: 100m
+
 services:
-  api:
-    image: judge0/api
+  server:
+    image: judge0/api:latest
     volumes:
-      - ./judge0-api.conf:/judge0-api.conf:ro
+      - ./judge0.conf:/judge0.conf:ro
     ports:
-      - "3000:3000"
+      - "80:3000"
     privileged: true
+    <<: *default-logging
     restart: always
 
-  worker:
-    image: judge0/api
-    command: ["./scripts/run-workers"]
+  workers:
+    image: judge0/api:latest
+    command: ["./scripts/workers"]
     volumes:
-      - ./judge0-api.conf:/judge0-api.conf:ro
+      - ./judge0.conf:/judge0.conf:ro
     privileged: true
+    <<: *default-logging
     restart: always
 
   db:
     image: postgres:9.6
-    env_file: judge0-api.conf
+    env_file: judge0.conf
     volumes:
       - ./srv/postgres-data:/var/lib/postgresql/data/
+    <<: *default-logging
     restart: always
 
   redis:
@@ -30,7 +41,8 @@ services:
       "bash", "-c",
       'docker-entrypoint.sh --appendonly yes --requirepass "$$REDIS_PASSWORD"'
     ]
-    env_file: judge0-api.conf
+    env_file: judge0.conf
     volumes:
       - ./srv/redis-data:/data
+    <<: *default-logging
     restart: always
